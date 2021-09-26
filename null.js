@@ -6,13 +6,13 @@ const mongoose = require('mongoose');
 const request = require('request');
 const Database = require("./models/role.js");
 const ChannelData = require('./models/Channel.js');
-mongoose.connect('mongo url si gir', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://thewolyoxd:thewolyoxd@thewolyoxd.u92ds.mongodb.net/thewolyoxd?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.on("open", async() => {
 console.log("Mongo Bağlandı.")
 })
 
 client.on("ready", async () => {
-  client.user.setPresence({ activity: { name: "null 💛 shields" }, status: "idle" });
+  client.user.setPresence({ activity: { name: "Wéx ❤ Wolyo" }, status: "online" });
   let botVoiceChannel = client.channels.cache.get(ayarlar.botVoiceChannelID);
   if (botVoiceChannel) botVoiceChannel.join().catch(err => console.error("Ses kanalına giriş başarısız"));
 });
@@ -25,7 +25,7 @@ client.on("message", async message => {
   let command = message.content.split(' ')[0].slice(ayarlar.botPrefix.length);
   let embed = new MessageEmbed().setColor("ORANGE").setAuthor(message.member.displayName, message.author.avatarURL({ dynamic: true, })).setFooter("Zeox").setTimestamp();
   
-  if (command === "eval" && message.author.id === ayarlar.botOwner) {
+  if (command === "evals" && message.author.id === ayarlar.botOwner) {
     if (!args[0]) return message.channel.send(`Kod belirtilmedi`);
       let code = args.join(' ');
       function clean(text) {
@@ -42,7 +42,7 @@ client.on("message", async message => {
 
 
 // Güvenliye ekleme fonksiyonu
-if (command === "ekle") {
+if (command === "güvenli") {
   let hedef;
   let rol = message.mentions.roles.first() || message.guild.roles.cache.get(args[0]) || message.guild.roles.cache.find(r => r.name === args.join(" "));
   let uye = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
@@ -76,7 +76,7 @@ if (command === "ekle") {
    }
  });
 
-  if(command === "ryükle") {
+  if(command === "rolkur") {
     if (!args[0] || isNaN(args[0])) return message.channel.send(embed.setDescription("`Veritabanından rol seç.`"));
 
     Database.findOne({guildID: ayarlar.guildID, roleID: args[0]}, async (err, roleData) => {
@@ -125,7 +125,7 @@ if (command === "ekle") {
       if (logKanali) { logKanali.send(new MessageEmbed().setColor("RED").setTitle('Rol Verisi').setDescription(`\n\n —————————————— \n **Veri Yedeği Kullanıldı** \n —————————————— \n **Yavaş Yavaş Roller Dağıtılıyor** \n  ——————————————`).setFooter(ayarlar.altbaslık).setTimestamp()).catch();}
     });
   };
-  if(command === "kyükle") {
+  if(command === "kanalkur") {
   if (!args[0] || isNaN(args[0])) return message.channel.send(`Geçerli bir Kanal ID'si belirtmelisin.`);
   
   ChannelData.findOne({guildID: ayarlar.guildID, channelID: args[0]}, async (err, channelData) => {
@@ -193,7 +193,7 @@ if (command === "ekle") {
 
     
 
-  if(command === "verikayıt") {
+  if(command === "kayıt") {
   let guild = client.guilds.cache.get(ayarlar.guildID);
   if (guild) {
     guild.roles.cache.filter(r => r.name !== "@everyone" && !r.managed).forEach(role => {
@@ -240,7 +240,7 @@ if (command === "ekle") {
   message.react("🍑");
     console.log("Veri Bilgileri Kayıt Edildi.")
   };
-  if(command === "verikayıt") {
+  if(command === "kayıt") {
   let guild = client.guilds.cache.get(ayarlar.guildID);
   if (guild) {
     guild.channels.cache.filter(kanal => kanal.deleted !== true).forEach(channel => {
@@ -344,7 +344,7 @@ console.log("Veri Bilgileri Kayıt Edildi.")
 
 
   // Koruma açma kapama
-  if(command === "ayarlamalar")  {
+  if(command === "ayarlar")  {
     let korumalar = Object.keys(ayarlar).filter(k => k.includes('Guard'));
     if (!args[0] || !korumalar.some(k => k.includes(args[0]))) return message.channel.send(embed.setDescription(`Korumaları aktif etmek veya devre dışı bırakmak için **${ayarlar.botPrefix}ayar <koruma>** yazmanız yeterlidir! **Korumalar:** ${korumalar.map(k => `\`${k}\``).join(', ')}\n**Aktif Korumalar:** ${korumalar.filter(k => ayarlar[k]).map(k => `\`${k}\``).join(', ')}`));
     let koruma = korumalar.find(k => k.includes(args[0]));
@@ -431,7 +431,7 @@ client.on("guildUpdate", async (oldGuild, newGuild) => {
 client.on("channelCreate", async channel => {
   let entry = await channel.guild.fetchAuditLogs({type: 'CHANNEL_CREATE'}).then(audit => audit.entries.first());
   if (!entry || !entry.executor || Date.now()-entry.createdTimestamp > 5000 || guvenli(entry.executor.id) || !ayarlar.channelGuard) return;
-  channel.delete({reason: "Zeox Kanal Koruması"});
+  channel.delete({reason: "Wéx Kanal Koruması"});
   cezalandir(entry.executor.id, "ban");
   let logKanali = client.channels.cache.get(ayarlar.logChannelID);
   if (logKanali) { logKanali.send(new MessageEmbed().setColor("RED").setTitle('Kanal Açıldı').setDescription(`${entry.executor} - ${entry.executor.id} \n\n —————————————— \n **Kullanıcısı kanal açtı** \n —————————————— \n **Yöneticileri kapattım** \n  ——————————————`).setFooter(ayarlar.altbaslık).setTimestamp()).catch();}
@@ -481,7 +481,7 @@ client.on("channelUpdate", async (oldChannel, newChannel) => {
 client.on("channelDelete", async channel => {
   let entry = await channel.guild.fetchAuditLogs({type: 'CHANNEL_DELETE'}).then(audit => audit.entries.first());
   if (!entry || !entry.executor || Date.now()-entry.createdTimestamp > 5000 || guvenli(entry.executor.id) || !ayarlar.channelGuard) return;
-  await channel.clone({ reason: "Zeox Kanal Koruma" }).then(async kanal => {
+  await channel.clone({ reason: "Wéx Kanal Koruma" }).then(async kanal => {
     if (channel.parentID != null) await kanal.setParent(channel.parentID);
     await kanal.setPosition(channel.position);
     if (channel.type == "category") await channel.guild.channels.cache.filter(k => k.parentID == channel.id).forEach(x => x.setParent(kanal.id));
@@ -496,7 +496,7 @@ client.on("channelDelete", async channel => {
 client.on("roleCreate", async role => {
 let entry = await role.guild.fetchAuditLogs({ limit: 1, type: 'ROLE_CREATE' }).then(audit => audit.entries.first());
 if (!entry || !entry.executor || Date.now()-entry.createdTimestamp > 5000 || guvenli(entry.executor.id) || !ayarlar.channelGuard) return;
-await role.delete({ reason: "Zeox Rol Koruması" });
+await role.delete({ reason: "Wéx Rol Koruması" });
 
   let logKanali = client.channels.cache.get(ayarlar.logChannelID);
   cezalandir(entry.executor.id, "ban");
