@@ -1,26 +1,26 @@
 {
    
     
-    "botOwner":"",
-    "botPrefix":"",
-    "botToken":"",
-    "verikanal":"veri bilgisi kanalı",
-    "backkanal":"veri bilgisi kanalı",
-    "altbaslık":"null 💛 shields",
-    "guildID":"",
-    "botVoiceChannelID":"",
-    "logChannelID":"",
-    "sunucu":"THIS IS NULL",
-    "sunucuresim":"https://i.hizliresim.com/n1nps1g.jpg",
+    "botOwner":"810161653756198933",
+    "botPrefix":".",
+    "botToken":"ODY5NTUyOTcyODM5OTMxOTI0.YP_4UA.wtidE0a3sdhQM5iSJAwMYJSjOe0",
+    "verikanal":"891358843219615836",
+    "backkanal":"891358843219615836",
+    "altbaslık":"Wéx ❤ Wolyo",
+    "guildID":"890269188348866570",
+    "botVoiceChannelID":"891361692653617172",
+    "logChannelID":"891358843219615836",
+    "sunucu":"Wéx",
+    "sunucuresim":"",
     "channelGuard":true,
     "roleGuard":true,
     "serverGuard":true,
     "botGuard":true,
     "banGuard":true,
     "kickGuard":true,
-    "whitelist":[],
-    "boosterRole":"",
-    "jailRole":""
+    "whitelist":["810161653756198933"],
+    "boosterRole":"890289055911268513",
+    "jailRole":"890285509191028737"
 
 
 }
